@@ -5,6 +5,8 @@
 //  Created by Noam Efergan on 03/10/2024.
 //
 
+import Foundation
+
 public struct ToastModel {
   var style: ToastStyle
   var title: String

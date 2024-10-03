@@ -113,7 +113,7 @@ private extension LoginViewController {
   func handleState(_ state: State) {
     switch state {
     case let .errored(error):
-      print(error)
+      handleErrorState(error)
     case .success:
       print("Success")
     case .loading:
@@ -124,6 +124,17 @@ private extension LoginViewController {
   @objc
   func onTapLoginButton() {
     state = .loading
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+      self.state = .errored("Test")
+    }
+  }
+
+  func handleErrorState(_ error: String) {
+    let model = ToastModel(style: .error, title: error)
+    passwordTextField.isEnabled = true
+    emailTextField.isEnabled = true
+    loginButton.stopLoading()
+    showToast(toastModel: model)
   }
 
   func handleLoadingState() {
@@ -168,7 +179,7 @@ private extension LoginViewController {
 // MARK: LoginViewController.State
 extension LoginViewController {
   enum State {
-    case errored(String?)
+    case errored(String)
     case success
     case loading
   }

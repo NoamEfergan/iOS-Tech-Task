@@ -30,7 +30,7 @@ public enum ToastStyle {
     case .info:
       return UIColor(rgb: 0x3B4960)
     case .error:
-      return UIColor(rgb: 0xC62828) // new case added
+      return UIColor(rgb: 0xC62828)
     }
   }
 }
