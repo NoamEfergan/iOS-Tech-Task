@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,11 @@
 		2416E7692CAE8E59003BF114 /* ToastStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2416E7682CAE8E59003BF114 /* ToastStyle.swift */; };
 		2416E76B2CAE8ED3003BF114 /* UIColor+RGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2416E76A2CAE8ED3003BF114 /* UIColor+RGB.swift */; };
 		2416E76E2CAE9083003BF114 /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2416E76D2CAE9083003BF114 /* Padding.swift */; };
+		2416E7712CAE93FD003BF114 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = 2416E7702CAE93FD003BF114 /* Networking */; };
+		2416E7732CAE9490003BF114 /* LoginValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2416E7722CAE948A003BF114 /* LoginValidator.swift */; };
+		2416E7752CAE975E003BF114 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2416E7742CAE975E003BF114 /* LoginViewModel.swift */; };
+		2416E7762CAE975E003BF114 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2416E7742CAE975E003BF114 /* LoginViewModel.swift */; };
+		2416E7772CAE976C003BF114 /* LoginValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2416E7722CAE948A003BF114 /* LoginValidator.swift */; };
 		B228EA6B2880B30B00B35F16 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B228EA692880B30B00B35F16 /* LoginViewController.swift */; };
 		B26EF47828881E7F003BFDF2 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = B26EF47728881E7F003BFDF2 /* Networking */; };
 		B2CA46CC279350880041B3A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CA46CB279350880041B3A5 /* AppDelegate.swift */; };
@@ -42,6 +47,8 @@
 		2416E7682CAE8E59003BF114 /* ToastStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastStyle.swift; sourceTree = "<group>"; };
 		2416E76A2CAE8ED3003BF114 /* UIColor+RGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+RGB.swift"; sourceTree = "<group>"; };
 		2416E76D2CAE9083003BF114 /* Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Padding.swift; sourceTree = "<group>"; };
+		2416E7722CAE948A003BF114 /* LoginValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginValidator.swift; sourceTree = "<group>"; };
+		2416E7742CAE975E003BF114 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		B228EA692880B30B00B35F16 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		B24EED92288ED5740016C233 /* Networking */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Networking; sourceTree = "<group>"; };
 		B2CA46C8279350880041B3A5 /* MoneyBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2416E7712CAE93FD003BF114 /* Networking in Frameworks */,
 				B26EF47828881E7F003BFDF2 /* Networking in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -77,7 +85,9 @@
 		2416E75C2CAE8BAE003BF114 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				2416E7722CAE948A003BF114 /* LoginValidator.swift */,
 				B228EA692880B30B00B35F16 /* LoginViewController.swift */,
+				2416E7742CAE975E003BF114 /* LoginViewModel.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -196,6 +206,7 @@
 			name = MoneyBox;
 			packageProductDependencies = (
 				B26EF47728881E7F003BFDF2 /* Networking */,
+				2416E7702CAE93FD003BF114 /* Networking */,
 			);
 			productName = MoneyBox;
 			productReference = B2CA46C8279350880041B3A5 /* MoneyBox.app */;
@@ -248,6 +259,7 @@
 			);
 			mainGroup = B2CA46BF279350880041B3A5;
 			packageReferences = (
+				2416E76F2CAE93FD003BF114 /* XCLocalSwiftPackageReference "Networking" */,
 			);
 			productRefGroup = B2CA46C9279350880041B3A5 /* Products */;
 			projectDirPath = "";
@@ -287,12 +299,14 @@
 			files = (
 				2416E75F2CAE8C03003BF114 /* LoadingButton.swift in Sources */,
 				B2CA46CC279350880041B3A5 /* AppDelegate.swift in Sources */,
+				2416E7752CAE975E003BF114 /* LoginViewModel.swift in Sources */,
 				2416E76E2CAE9083003BF114 /* Padding.swift in Sources */,
 				2416E7612CAE8DF1003BF114 /* UIViewController+ShowToast.swift in Sources */,
 				2416E7672CAE8E3E003BF114 /* ToastModel.swift in Sources */,
 				B228EA6B2880B30B00B35F16 /* LoginViewController.swift in Sources */,
 				2416E76B2CAE8ED3003BF114 /* UIColor+RGB.swift in Sources */,
 				2416E7692CAE8E59003BF114 /* ToastStyle.swift in Sources */,
+				2416E7732CAE9490003BF114 /* LoginValidator.swift in Sources */,
 				2416E7652CAE8E30003BF114 /* ToastView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -301,6 +315,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2416E7772CAE976C003BF114 /* LoginValidator.swift in Sources */,
+				2416E7762CAE975E003BF114 /* LoginViewModel.swift in Sources */,
 				B2CA47672794D69A0041B3A5 /* StubData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -571,7 +587,18 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		2416E76F2CAE93FD003BF114 /* XCLocalSwiftPackageReference "Networking" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Networking;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		2416E7702CAE93FD003BF114 /* Networking */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Networking;
+		};
 		B26EF47728881E7F003BFDF2 /* Networking */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Networking;

@@ -5,6 +5,7 @@
 //  Created by Zeynep Kara on 16.01.2022.
 //
 
+import Networking
 import UIKit
 
 // MARK: - LoginViewController
@@ -64,6 +65,9 @@ class LoginViewController: UIViewController {
     didSet { handleState(state) }
   }
 
+  private let viewModel = LoginViewModel(networkingService: DataProvider())
+  private var loadingTask: Task<Void, Never>?
+
   // MARK: - Lifecycle methods
   override func viewDidLoad() {
     setupUI()
@@ -73,12 +77,16 @@ class LoginViewController: UIViewController {
   override func viewDidDisappear(_: Bool) {
     removeKeyboardObservers()
   }
+
+  deinit {
+    loadingTask = nil
+  }
 }
 
 // MARK: - UI methods
 private extension LoginViewController {
   func setupUI() {
-    view.backgroundColor = .white
+    view.backgroundColor = UIColor(resource: .grey)
     setupStackView()
     setupLoginButton()
   }
@@ -124,8 +132,26 @@ private extension LoginViewController {
   @objc
   func onTapLoginButton() {
     state = .loading
-    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-      self.state = .errored("Test")
+    guard let email = emailTextField.text, LoginValidator.validateEmail(email) else {
+      state = .errored("Invalid email")
+      return
+    }
+    guard let password = passwordTextField.text, LoginValidator.validatePassword(password) else {
+      state = .errored("Invalid password")
+      return
+    }
+    login(email: email, password: password)
+  }
+
+  @MainActor
+  func login(email: String, password: String) {
+    loadingTask?.cancel()
+    loadingTask = Task {
+      if let errorMessage = await viewModel.performLogin(with: email, and: password) {
+        self.state = .errored(errorMessage)
+      } else {
+        self.state = .success
+      }
     }
   }
 
