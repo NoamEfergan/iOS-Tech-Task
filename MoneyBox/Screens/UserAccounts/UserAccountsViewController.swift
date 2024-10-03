@@ -38,6 +38,7 @@ final class UserAccountsViewController: UIViewController {
   init(viewModel: UserAccountsViewModel, state: State = .loading) {
     self.state = state
     self.viewModel = viewModel
+    viewModel.fetchProducts()
     super.init(nibName: nil, bundle: nil)
   }
 

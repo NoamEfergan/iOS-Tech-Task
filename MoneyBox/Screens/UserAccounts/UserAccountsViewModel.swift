@@ -10,9 +10,17 @@ import Networking
 final class UserAccountsViewModel {
   // MARK: - Properties
   private let networkingService: DataProviderLogic
-  weak var sessionManager: SessionManager?
 
+  // MARK: - Initialiser
   init(networkingService: DataProviderLogic) {
     self.networkingService = networkingService
+  }
+
+  // MARK: - Public methods
+
+  func fetchProducts() {
+    networkingService.fetchProducts { response in
+      print("Noam: \(response)")
+    }
   }
 }

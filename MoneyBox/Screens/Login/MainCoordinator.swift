@@ -12,12 +12,13 @@ class MainCoordinator: Coordinator {
   // MARK: - Properties
   var childCoordinators = [Coordinator]()
   var navigationController: UINavigationController
-  var sessionManager: SessionManager?
+  let sessionManager: SessionManager
   private let networkService = DataProvider()
 
   // MARK: - Initialisers
-  init(navigationController: UINavigationController) {
+  init(navigationController: UINavigationController, sessionManager: SessionManager = SessionManager()) {
     self.navigationController = navigationController
+    self.sessionManager = sessionManager
   }
 
   // MARK: - Public methods
@@ -31,7 +32,6 @@ class MainCoordinator: Coordinator {
 
   func navigateToUserAccounts() {
     let viewModel = UserAccountsViewModel(networkingService: networkService)
-    viewModel.sessionManager = sessionManager
     let viewController = UserAccountsViewController(viewModel: viewModel)
     navigationController.pushViewController(viewController, animated: true)
   }
