@@ -67,7 +67,7 @@ class LoginViewController: UIViewController {
 
   private let viewModel: LoginViewModel
   private var loadingTask: Task<Void, Never>?
-  weak var coordinator: LoginCoordinator?
+  weak var coordinator: MainCoordinator?
 
   // MARK: - Initialisers
   init(viewModel: LoginViewModel, state: State = .loading) {

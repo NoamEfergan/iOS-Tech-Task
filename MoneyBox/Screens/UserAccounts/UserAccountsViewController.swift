@@ -11,8 +11,9 @@ import UIKit
 // MARK: - UserAccountsViewController
 final class UserAccountsViewController: UIViewController {
   // MARK: - Properties
-  weak var coordinator: UserAccountsCoordinator?
+  weak var coordinator: MainCoordinator?
   private var state: State = .loading
+  private let viewModel: UserAccountsViewModel
 
   // MARK: - UIViews
   private let titleView: UILabel = {
@@ -31,6 +32,18 @@ final class UserAccountsViewController: UIViewController {
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     return collectionView
   }()
+
+  // MARK: - Initialisers
+
+  init(viewModel: UserAccountsViewModel, state: State = .loading) {
+    self.state = state
+    self.viewModel = viewModel
+    super.init(nibName: nil, bundle: nil)
+  }
+
+  required init?(coder _: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   // MARK: - Lifecycle methods
 
@@ -103,7 +116,7 @@ extension UserAccountsViewController: UICollectionViewDataSource {
 }
 
 // MARK: UserAccountsViewController.State
-private extension UserAccountsViewController {
+extension UserAccountsViewController {
   enum State {
     case loading
     case error

@@ -10,12 +10,12 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-  var coordinator: LoginCoordinator?
+  var coordinator: MainCoordinator?
   var window: UIWindow?
   func application(_: UIApplication,
                    didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     let navController = UINavigationController()
-    coordinator = LoginCoordinator(navigationController: navController)
+    coordinator = MainCoordinator(navigationController: navController)
     coordinator?.start()
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.rootViewController = navController
