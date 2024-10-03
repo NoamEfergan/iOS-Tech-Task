@@ -23,11 +23,17 @@
 		24DB4B412CAE9BD600FA476E /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B3F2CAE9BD200FA476E /* KeychainManager.swift */; };
 		24DB4B452CAE9DE300FA476E /* UserAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B442CAE9DE300FA476E /* UserAccountsViewController.swift */; };
 		24DB4B462CAE9DE300FA476E /* UserAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B442CAE9DE300FA476E /* UserAccountsViewController.swift */; };
-		24DB4B492CAE9EC700FA476E /* ProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B482CAE9EC700FA476E /* ProductCard.swift */; };
-		24DB4B4A2CAE9EC700FA476E /* ProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B482CAE9EC700FA476E /* ProductCard.swift */; };
 		24DB4B4C2CAE9F4E00FA476E /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B4B2CAE9F4E00FA476E /* Coordinator.swift */; };
 		24DB4B4F2CAE9F7500FA476E /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B4E2CAE9F7500FA476E /* LoginCoordinator.swift */; };
 		24DB4B512CAEA08800FA476E /* UserAccountsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B502CAEA07B00FA476E /* UserAccountsCoordinator.swift */; };
+		24DB4B772CAEAB5400FA476E /* ProductCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B762CAEAB5400FA476E /* ProductCardCell.swift */; };
+		24DB4B782CAEAB5400FA476E /* ProductCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B762CAEAB5400FA476E /* ProductCardCell.swift */; };
+		24DB4B7A2CAEAFC000FA476E /* DisplayableProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B792CAEAFBD00FA476E /* DisplayableProduct.swift */; };
+		24DB4B7B2CAEAFC000FA476E /* DisplayableProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B792CAEAFBD00FA476E /* DisplayableProduct.swift */; };
+		24DB4B822CAEC4F100FA476E /* Array+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B812CAEC4F100FA476E /* Array+Safe.swift */; };
+		24DB4B832CAEC4F100FA476E /* Array+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B812CAEC4F100FA476E /* Array+Safe.swift */; };
+		24DB4B882CAECD7C00FA476E /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B872CAECD7C00FA476E /* UserDefaultsManager.swift */; };
+		24DB4B892CAECD7C00FA476E /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B872CAECD7C00FA476E /* UserDefaultsManager.swift */; };
 		B228EA6B2880B30B00B35F16 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B228EA692880B30B00B35F16 /* LoginViewController.swift */; };
 		B26EF47828881E7F003BFDF2 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = B26EF47728881E7F003BFDF2 /* Networking */; };
 		B2CA46CC279350880041B3A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CA46CB279350880041B3A5 /* AppDelegate.swift */; };
@@ -60,10 +66,13 @@
 		2416E7742CAE975E003BF114 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		24DB4B3F2CAE9BD200FA476E /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		24DB4B442CAE9DE300FA476E /* UserAccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountsViewController.swift; sourceTree = "<group>"; };
-		24DB4B482CAE9EC700FA476E /* ProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCard.swift; sourceTree = "<group>"; };
 		24DB4B4B2CAE9F4E00FA476E /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		24DB4B4E2CAE9F7500FA476E /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		24DB4B502CAEA07B00FA476E /* UserAccountsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountsCoordinator.swift; sourceTree = "<group>"; };
+		24DB4B762CAEAB5400FA476E /* ProductCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCardCell.swift; sourceTree = "<group>"; };
+		24DB4B792CAEAFBD00FA476E /* DisplayableProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayableProduct.swift; sourceTree = "<group>"; };
+		24DB4B812CAEC4F100FA476E /* Array+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Safe.swift"; sourceTree = "<group>"; };
+		24DB4B872CAECD7C00FA476E /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		B228EA692880B30B00B35F16 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		B24EED92288ED5740016C233 /* Networking */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Networking; sourceTree = "<group>"; };
 		B2CA46C8279350880041B3A5 /* MoneyBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,7 +110,6 @@
 			isa = PBXGroup;
 			children = (
 				24DB4B4E2CAE9F7500FA476E /* LoginCoordinator.swift */,
-				24DB4B3F2CAE9BD200FA476E /* KeychainManager.swift */,
 				2416E7722CAE948A003BF114 /* LoginValidator.swift */,
 				B228EA692880B30B00B35F16 /* LoginViewController.swift */,
 				2416E7742CAE975E003BF114 /* LoginViewModel.swift */,
@@ -115,6 +123,7 @@
 				2416E76A2CAE8ED3003BF114 /* UIColor+RGB.swift */,
 				2416E75E2CAE8C03003BF114 /* LoadingButton.swift */,
 				2416E7602CAE8DF1003BF114 /* UIViewController+ShowToast.swift */,
+				24DB4B812CAEC4F100FA476E /* Array+Safe.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -140,6 +149,7 @@
 		2416E76C2CAE9078003BF114 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				24DB4B862CAECD6300FA476E /* Managers */,
 				24DB4B4B2CAE9F4E00FA476E /* Coordinator.swift */,
 				2416E76D2CAE9083003BF114 /* Padding.swift */,
 			);
@@ -158,19 +168,29 @@
 		24DB4B432CAE9DC700FA476E /* UserAccounts */ = {
 			isa = PBXGroup;
 			children = (
+				24DB4B792CAEAFBD00FA476E /* DisplayableProduct.swift */,
 				24DB4B502CAEA07B00FA476E /* UserAccountsCoordinator.swift */,
-				24DB4B472CAE9E3D00FA476E /* Components */,
+				24DB4B472CAE9E3D00FA476E /* Cells */,
 				24DB4B442CAE9DE300FA476E /* UserAccountsViewController.swift */,
 			);
 			path = UserAccounts;
 			sourceTree = "<group>";
 		};
-		24DB4B472CAE9E3D00FA476E /* Components */ = {
+		24DB4B472CAE9E3D00FA476E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				24DB4B482CAE9EC700FA476E /* ProductCard.swift */,
+				24DB4B762CAEAB5400FA476E /* ProductCardCell.swift */,
 			);
-			path = Components;
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		24DB4B862CAECD6300FA476E /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				24DB4B3F2CAE9BD200FA476E /* KeychainManager.swift */,
+				24DB4B872CAECD7C00FA476E /* UserDefaultsManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		B2CA46BF279350880041B3A5 = {
@@ -348,17 +368,20 @@
 				2416E7752CAE975E003BF114 /* LoginViewModel.swift in Sources */,
 				2416E76E2CAE9083003BF114 /* Padding.swift in Sources */,
 				2416E7612CAE8DF1003BF114 /* UIViewController+ShowToast.swift in Sources */,
+				24DB4B882CAECD7C00FA476E /* UserDefaultsManager.swift in Sources */,
 				2416E7672CAE8E3E003BF114 /* ToastModel.swift in Sources */,
 				B228EA6B2880B30B00B35F16 /* LoginViewController.swift in Sources */,
 				24DB4B402CAE9BD600FA476E /* KeychainManager.swift in Sources */,
 				24DB4B512CAEA08800FA476E /* UserAccountsCoordinator.swift in Sources */,
 				24DB4B4F2CAE9F7500FA476E /* LoginCoordinator.swift in Sources */,
+				24DB4B7A2CAEAFC000FA476E /* DisplayableProduct.swift in Sources */,
 				2416E76B2CAE8ED3003BF114 /* UIColor+RGB.swift in Sources */,
 				2416E7692CAE8E59003BF114 /* ToastStyle.swift in Sources */,
 				24DB4B462CAE9DE300FA476E /* UserAccountsViewController.swift in Sources */,
+				24DB4B822CAEC4F100FA476E /* Array+Safe.swift in Sources */,
+				24DB4B772CAEAB5400FA476E /* ProductCardCell.swift in Sources */,
 				2416E7732CAE9490003BF114 /* LoginValidator.swift in Sources */,
 				2416E7652CAE8E30003BF114 /* ToastView.swift in Sources */,
-				24DB4B492CAE9EC700FA476E /* ProductCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,9 +392,12 @@
 				2416E7772CAE976C003BF114 /* LoginValidator.swift in Sources */,
 				24DB4B452CAE9DE300FA476E /* UserAccountsViewController.swift in Sources */,
 				2416E7762CAE975E003BF114 /* LoginViewModel.swift in Sources */,
+				24DB4B782CAEAB5400FA476E /* ProductCardCell.swift in Sources */,
+				24DB4B832CAEC4F100FA476E /* Array+Safe.swift in Sources */,
+				24DB4B892CAECD7C00FA476E /* UserDefaultsManager.swift in Sources */,
 				B2CA47672794D69A0041B3A5 /* StubData.swift in Sources */,
 				24DB4B412CAE9BD600FA476E /* KeychainManager.swift in Sources */,
-				24DB4B4A2CAE9EC700FA476E /* ProductCard.swift in Sources */,
+				24DB4B7B2CAEAFC000FA476E /* DisplayableProduct.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

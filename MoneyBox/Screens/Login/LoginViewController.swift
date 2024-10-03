@@ -65,9 +65,20 @@ class LoginViewController: UIViewController {
     didSet { handleState(state) }
   }
 
-  private let viewModel = LoginViewModel(networkingService: DataProvider())
+  private let viewModel: LoginViewModel
   private var loadingTask: Task<Void, Never>?
   weak var coordinator: LoginCoordinator?
+
+  // MARK: - Initialisers
+  init(viewModel: LoginViewModel, state: State = .loading) {
+    self.viewModel = viewModel
+    self.state = state
+    super.init(nibName: nil, bundle: nil)
+  }
+
+  required init?(coder _: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   // MARK: - Lifecycle methods
   override func viewDidLoad() {
@@ -157,10 +168,11 @@ private extension LoginViewController {
   func login(email: String, password: String) {
     loadingTask?.cancel()
     loadingTask = Task {
-      if let errorMessage = await viewModel.performLogin(with: email, and: password) {
-        self.state = .errored(errorMessage)
-      } else {
-        self.state = .success
+      do {
+        try await viewModel.performLogin(with: email, and: password)
+        self.coordinator?.navigateToUserAccounts()
+      } catch {
+        self.state = .errored(error.localizedDescription)
       }
     }
   }
