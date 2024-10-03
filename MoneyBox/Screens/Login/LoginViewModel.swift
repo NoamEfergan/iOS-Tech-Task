@@ -8,7 +8,6 @@
 import Foundation
 import Networking
 
-
 // MARK: - LoginViewModel
 final class LoginViewModel {
   // MARK: - Properties

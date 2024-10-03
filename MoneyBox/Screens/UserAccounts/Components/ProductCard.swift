@@ -9,5 +9,4 @@ import UIKit
 
 final class ProductCard: UIView {
   // MARK: - Properties
-  
 }
