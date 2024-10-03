@@ -5,13 +5,12 @@
 //  Created by Noam Efergan on 03/10/2024.
 //
 
-
 public struct ToastModel {
   var style: ToastStyle
   var title: String
   var description: String?
   let length: Int
-  
+
   /// The configuration model for the toast
   /// - Parameters:
   ///   - style: What kind of toast it is. enum.

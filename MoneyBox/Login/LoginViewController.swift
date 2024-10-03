@@ -117,12 +117,13 @@ private extension LoginViewController {
     case .success:
       print("Success")
     case .loading:
-        handleLoadingState()
+      handleLoadingState()
     }
   }
+
   @objc
   func onTapLoginButton() {
-    self.state = .loading
+    state = .loading
   }
 
   func handleLoadingState() {

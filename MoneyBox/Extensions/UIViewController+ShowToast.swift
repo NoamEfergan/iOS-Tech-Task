@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 public extension UIViewController {
   func showToast(toastModel: ToastModel) {
     guard let view else { return }
@@ -14,7 +15,7 @@ public extension UIViewController {
     }
     let height: CGFloat = 64
     let width: CGFloat = min(400, view.bounds.width - (2 * Padding.large))
-    
+
     let yPosition = view.bounds.height + view.bounds.origin.y - Padding.regular - height
     let frame = CGRect(x: view.bounds.width - Padding.large - width,
                        y: yPosition,

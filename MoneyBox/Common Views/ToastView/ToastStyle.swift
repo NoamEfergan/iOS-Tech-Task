@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 public enum ToastStyle {
   case success
   case info
