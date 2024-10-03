@@ -8,9 +8,9 @@
 import Foundation
 
 public struct OneOffPaymentResponse: Decodable {
-    public let moneybox: Double?
-    
-    enum CodingKeys: String, CodingKey {
-        case moneybox = "Moneybox"
-    }
+  public let moneybox: Double?
+
+  enum CodingKeys: String, CodingKey {
+    case moneybox = "Moneybox"
+  }
 }

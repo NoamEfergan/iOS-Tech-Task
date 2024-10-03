@@ -7,6 +7,6 @@
 
 import Foundation
 
-public final class Authentication {
-    public static var token: String?
+public enum Authentication {
+  public static var token: String?
 }

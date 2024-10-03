@@ -9,24 +9,23 @@ import Foundation
 
 // MARK: - ErrorResponse
 public struct ErrorResponse: Codable {
+  public let name: String?
+  public let message: String?
+  public let validationErrors: [ValidationError]?
+
+  enum CodingKeys: String, CodingKey {
+    case name = "Name"
+    case message = "Message"
+    case validationErrors = "ValidationErrors"
+  }
+
+  public struct ValidationError: Codable {
     public let name: String?
     public let message: String?
-    public let validationErrors: [ValidationError]?
 
     enum CodingKeys: String, CodingKey {
-        case name = "Name"
-        case message = "Message"
-        case validationErrors = "ValidationErrors"
+      case name = "Name"
+      case message = "Message"
     }
-    
-    public struct ValidationError: Codable {
-        public let name: String?
-        public let message: String?
-
-        enum CodingKeys: String, CodingKey {
-            case name = "Name"
-            case message = "Message"
-        }
-    }
-
+  }
 }

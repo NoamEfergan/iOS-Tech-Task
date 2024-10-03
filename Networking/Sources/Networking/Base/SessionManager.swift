@@ -8,11 +8,11 @@
 import Foundation
 
 public final class SessionManager: NSObject {
-    public func setUserToken(_ token: String) {
-        Authentication.token = token
-    }
-    
-    public func removeUserToken() {
-        Authentication.token = nil
-    }
+  public func setUserToken(_ token: String) {
+    Authentication.token = token
+  }
+
+  public func removeUserToken() {
+    Authentication.token = nil
+  }
 }
