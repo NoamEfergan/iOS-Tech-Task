@@ -67,6 +67,7 @@ class LoginViewController: UIViewController {
 
   private let viewModel = LoginViewModel(networkingService: DataProvider())
   private var loadingTask: Task<Void, Never>?
+  weak var coordinator: LoginCoordinator?
 
   // MARK: - Lifecycle methods
   override func viewDidLoad() {
@@ -120,6 +121,7 @@ private extension LoginViewController {
     if let credentials = KeychainManager.fetchCredentialsFromKeychain() {
       emailTextField.text = credentials.email
       passwordTextField.text = credentials.password
+      onTapLoginButton()
     }
   }
 }
