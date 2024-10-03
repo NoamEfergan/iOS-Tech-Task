@@ -89,6 +89,7 @@ private extension LoginViewController {
     view.backgroundColor = UIColor(resource: .grey)
     setupStackView()
     setupLoginButton()
+    prePopulateFields()
   }
 
   func setupStackView() {
@@ -114,6 +115,13 @@ private extension LoginViewController {
       loginButton.heightAnchor.constraint(equalToConstant: 44)
     ])
   }
+
+  func prePopulateFields() {
+    if let credentials = KeychainManager.fetchCredentialsFromKeychain() {
+      emailTextField.text = credentials.email
+      passwordTextField.text = credentials.password
+    }
+  }
 }
 
 // MARK: - Private methods
@@ -123,7 +131,7 @@ private extension LoginViewController {
     case let .errored(error):
       handleErrorState(error)
     case .success:
-      print("Success")
+      handleSuccessState()
     case .loading:
       handleLoadingState()
     }
@@ -167,6 +175,10 @@ private extension LoginViewController {
     passwordTextField.isEnabled = false
     emailTextField.isEnabled = false
     loginButton.startLoading()
+  }
+
+  func handleSuccessState() {
+    loginButton.stopLoading()
   }
 }
 

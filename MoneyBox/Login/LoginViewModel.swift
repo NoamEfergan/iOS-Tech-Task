@@ -8,6 +8,7 @@
 import Foundation
 import Networking
 
+// MARK: - LoginViewModel
 final class LoginViewModel {
   // MARK: - Properties
   private let networkingService: DataProviderLogic
@@ -23,6 +24,7 @@ final class LoginViewModel {
         switch result {
         case let .success(success):
           print("Noam: \(success)")
+          KeychainManager.saveCredentialsToKeychain(email: email, password: password)
           continuation.resume(returning: nil)
         case let .failure(failure):
           continuation.resume(returning: failure.localizedDescription)
