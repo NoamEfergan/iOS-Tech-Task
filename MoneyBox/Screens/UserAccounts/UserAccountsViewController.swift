@@ -28,7 +28,7 @@ final class UserAccountsViewController: UIViewController {
   }()
 
   private let collectionView: UICollectionView = {
-    var listConfiguration = UICollectionLayoutListConfiguration(appearance: .plain)
+    var listConfiguration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
     listConfiguration.showsSeparators = false
     let layout = UICollectionViewCompositionalLayout.list(using: listConfiguration)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -84,9 +84,9 @@ private extension UserAccountsViewController {
     collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: .cellReusableID)
     view.addSubview(collectionView)
     NSLayoutConstraint.activate([
-      collectionView.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: Padding.regular),
-      collectionView.leadingAnchor.constraint(equalTo: titleView.leadingAnchor),
-      collectionView.trailingAnchor.constraint(equalTo: titleView.trailingAnchor),
+      collectionView.topAnchor.constraint(equalTo: titleView.bottomAnchor),
+      collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
     ])
     collectionView.backgroundColor = .clear
@@ -98,7 +98,7 @@ extension UserAccountsViewController: UICollectionViewDataSource {
   func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
     switch viewModel.state {
     case .loading:
-      return 3
+      return 4
     case .error:
       return 1
     case let .loaded(response):
@@ -109,8 +109,13 @@ extension UserAccountsViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     switch viewModel.state {
     case .loading:
-      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: .cellReusableID, for: indexPath)
-      cell.backgroundColor = .lightGray
+      guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCardCell.identifier,
+                                                          for: indexPath) as? ProductCardCell else {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: .cellReusableID, for: indexPath)
+        cell.backgroundColor = .lightGray
+        return cell
+      }
+      cell.placeHolder()
       return cell
     case .error:
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: .cellReusableID, for: indexPath)

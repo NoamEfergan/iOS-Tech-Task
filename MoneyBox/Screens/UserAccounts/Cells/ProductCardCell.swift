@@ -22,7 +22,7 @@ final class ProductCardCell: UICollectionViewCell {
     return stack
   }()
 
-  private let nameLabel = UILabel()
+  private let nameLabel = ShimmeringLabel()
   private let nameTitleLabel = UILabel()
 
   private let planStack: UIStackView = {
@@ -33,7 +33,7 @@ final class ProductCardCell: UICollectionViewCell {
     return stack
   }()
 
-  private let planValueLabel = UILabel()
+  private let planValueLabel = ShimmeringLabel()
   private let planValueTitleLabel = UILabel()
 
   private let moneyBoxStack: UIStackView = {
@@ -44,8 +44,12 @@ final class ProductCardCell: UICollectionViewCell {
     return stack
   }()
 
-  private let moneyBoxValueLabel = UILabel()
+  private let moneyBoxValueLabel = ShimmeringLabel()
   private let moneyBoxValueTitleLabel = UILabel()
+
+  private var shimmerableLabels: [ShimmeringLabel] {
+    [nameLabel, planValueLabel, moneyBoxValueLabel]
+  }
 
   // MARK: - Initialisers
   override init(frame: CGRect) {
@@ -158,6 +162,14 @@ extension ProductCardCell {
     nameLabel.text = product.name
     planValueLabel.text = product.planValue
     moneyBoxValueLabel.text = product.moneyBoxValue
+    shimmerableLabels.forEach { $0.stopShimmering() }
+  }
+
+  func placeHolder() {
+    for shimmerableLabel in shimmerableLabels {
+      shimmerableLabel.text = "Loading..." // This won't show anyway
+      shimmerableLabel.shimmer()
+    }
   }
 }
 
