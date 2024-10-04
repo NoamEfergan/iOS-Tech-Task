@@ -26,6 +26,8 @@
 		242E9BF02CAFF2C40078A4E1 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242E9BEF2CAFF2C40078A4E1 /* CardView.swift */; };
 		242E9BF22CAFF46E0078A4E1 /* IndividualAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242E9BF12CAFF4660078A4E1 /* IndividualAccountViewModel.swift */; };
 		242E9BF32CAFF46E0078A4E1 /* IndividualAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242E9BF12CAFF4660078A4E1 /* IndividualAccountViewModel.swift */; };
+		24430A342CAFFD0600D92490 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 24430A332CAFFD0600D92490 /* Lottie */; };
+		24430A362CAFFE2600D92490 /* Confetti_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 24430A352CAFFE2600D92490 /* Confetti_lottie.json */; };
 		24DB4B402CAE9BD600FA476E /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B3F2CAE9BD200FA476E /* KeychainManager.swift */; };
 		24DB4B412CAE9BD600FA476E /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B3F2CAE9BD200FA476E /* KeychainManager.swift */; };
 		24DB4B452CAE9DE300FA476E /* UserAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B442CAE9DE300FA476E /* UserAccountsViewController.swift */; };
@@ -77,6 +79,7 @@
 		242E9BEC2CAFEA520078A4E1 /* IndividualAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualAccountViewController.swift; sourceTree = "<group>"; };
 		242E9BEF2CAFF2C40078A4E1 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		242E9BF12CAFF4660078A4E1 /* IndividualAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualAccountViewModel.swift; sourceTree = "<group>"; };
+		24430A352CAFFE2600D92490 /* Confetti_lottie.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Confetti_lottie.json; sourceTree = "<group>"; };
 		24DB4B3F2CAE9BD200FA476E /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		24DB4B442CAE9DE300FA476E /* UserAccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountsViewController.swift; sourceTree = "<group>"; };
 		24DB4B4B2CAE9F4E00FA476E /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -105,6 +108,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				24DB4B8F2CAED19C00FA476E /* Networking in Frameworks */,
+				24430A342CAFFD0600D92490 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,6 +225,7 @@
 		B2CA46BF279350880041B3A5 = {
 			isa = PBXGroup;
 			children = (
+				24430A352CAFFE2600D92490 /* Confetti_lottie.json */,
 				B2DEEA31288818470030A8F2 /* Packages */,
 				B2CA46CA279350880041B3A5 /* MoneyBox */,
 				B2CA46E12793508A0041B3A5 /* MoneyBoxTests */,
@@ -296,6 +301,7 @@
 			name = MoneyBox;
 			packageProductDependencies = (
 				24DB4B8E2CAED19C00FA476E /* Networking */,
+				24430A332CAFFD0600D92490 /* Lottie */,
 			);
 			productName = MoneyBox;
 			productReference = B2CA46C8279350880041B3A5 /* MoneyBox.app */;
@@ -349,6 +355,7 @@
 			mainGroup = B2CA46BF279350880041B3A5;
 			packageReferences = (
 				24DB4B8D2CAED19C00FA476E /* XCLocalSwiftPackageReference "Networking" */,
+				24430A322CAFFD0600D92490 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = B2CA46C9279350880041B3A5 /* Products */;
 			projectDirPath = "";
@@ -366,6 +373,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2CA46D82793508A0041B3A5 /* LaunchScreen.storyboard in Resources */,
+				24430A362CAFFE2600D92490 /* Confetti_lottie.json in Resources */,
 				B2CA47712794D8E50041B3A5 /* LoginSucceed.json in Resources */,
 				B2CA46D52793508A0041B3A5 /* Assets.xcassets in Resources */,
 				B2CA47B42796052F0041B3A5 /* Accounts.json in Resources */,
@@ -707,7 +715,23 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		24430A322CAFFD0600D92490 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		24430A332CAFFD0600D92490 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24430A322CAFFD0600D92490 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
+		};
 		24DB4B8E2CAED19C00FA476E /* Networking */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Networking;

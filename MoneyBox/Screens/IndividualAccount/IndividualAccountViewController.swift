@@ -1,3 +1,4 @@
+import Lottie
 import UIKit
 
 // MARK: - IndividualAccountViewController
@@ -5,6 +6,7 @@ final class IndividualAccountViewController: UIViewController {
   // MARK: - Properties
   private let viewModel: IndividualAccountViewModel
   private let id: Int
+  private var confettiAnimationView: LottieAnimationView?
 
   // MARK: - UIViews
   private let titleLabel: UILabel = {
@@ -112,6 +114,17 @@ private extension IndividualAccountViewController {
     setupCardView()
     setupContentStackView()
     setupAddButton()
+    setupConfettiAnimation()
+  }
+
+  func setupConfettiAnimation() {
+    confettiAnimationView = .init(name: "Confetti_lottie")
+    confettiAnimationView?.frame = view.bounds
+    confettiAnimationView?.contentMode = .scaleAspectFit
+    confettiAnimationView?.loopMode = .playOnce
+    confettiAnimationView?.animationSpeed = 0.5
+    view.addSubview(confettiAnimationView!)
+    confettiAnimationView?.isHidden = true
   }
 
   func setupCardView() {
@@ -164,6 +177,15 @@ private extension IndividualAccountViewController {
   func onAddButtonTapped() {
     viewModel.addMoney(id: id)
   }
+
+  func playConfettiAnimation() {
+    confettiAnimationView?.isHidden = false
+    confettiAnimationView?.play { [weak self] finished in
+      if finished {
+        self?.confettiAnimationView?.isHidden = true
+      }
+    }
+  }
 }
 
 // MARK: IndividualAccountViewModelDelegate
@@ -176,8 +198,11 @@ extension IndividualAccountViewController: IndividualAccountViewModelDelegate {
       addButton.startLoading()
     case let .success(newAmount):
       addButton.stopLoading()
+      let toastModel = ToastModel(style: .success, title: "Added successfully")
       DispatchQueue.main.async { [weak self] in
         self?.moneyBoxValueLabel.text = newAmount
+        self?.showToast(toastModel: toastModel)
+        self?.playConfettiAnimation()
       }
     case let .failure(msg):
       addButton.stopLoading()
