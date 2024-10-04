@@ -1,0 +1,22 @@
+name: Xcode Tests
+
+on:
+  workflow_run:
+    workflows: ["SwiftFormat"]
+    types:
+      - completed
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Build and test
+        run: |
+          xcodebuild test -project MoneyBox.xcodeproj -scheme MoneyBox -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=18.0'
