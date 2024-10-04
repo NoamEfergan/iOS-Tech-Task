@@ -237,7 +237,7 @@ extension UserAccountsViewController: UICollectionViewDelegate {
 
 // MARK: UserAccountsViewModelDelegate
 extension UserAccountsViewController: UserAccountsViewModelDelegate {
-  func onStateUpdate() {
+  func onStateUpdate(state _: UserAccountsViewModel.State) {
     DispatchQueue.main.async { [weak self] in
       self?.applySnapshot()
     }

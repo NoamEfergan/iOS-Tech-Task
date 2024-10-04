@@ -167,7 +167,7 @@ private extension LoginViewController {
 extension LoginViewController: LoginViewModelDelegate {
   func onStateUpdate(_ state: LoginViewModel.State) {
     switch state {
-    case let .errored(error):
+    case let .error(error):
       handleErrorState(error)
     case .success:
       handleSuccessState()

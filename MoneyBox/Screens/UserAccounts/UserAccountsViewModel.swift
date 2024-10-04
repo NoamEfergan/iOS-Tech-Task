@@ -9,7 +9,7 @@ import Networking
 
 // MARK: - UserAccountsViewModelDelegate
 protocol UserAccountsViewModelDelegate: NSObject {
-  func onStateUpdate()
+  func onStateUpdate(state: UserAccountsViewModel.State)
 }
 
 // MARK: - UserAccountsViewModel
@@ -18,7 +18,7 @@ final class UserAccountsViewModel {
   private let networkingService: DataProviderLogic
   public private(set) var state: State = .loading {
     didSet {
-      delegate?.onStateUpdate()
+      delegate?.onStateUpdate(state: state)
     }
   }
 

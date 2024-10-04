@@ -39,11 +39,11 @@ final class LoginViewModel {
   func login(with email: String?, and password: String?) {
     state = .loading
     guard let email, LoginValidator.validateEmail(email) else {
-      state = .errored("Invalid email")
+      state = .error("Invalid email")
       return
     }
     guard let password, LoginValidator.validatePassword(password) else {
-      state = .errored("Invalid password")
+      state = .error("Invalid password")
       return
     }
     login(email: email, password: password)
@@ -59,7 +59,7 @@ private extension LoginViewModel {
         try await performLogin(with: email, and: password)
         self.state = .success
       } catch {
-        self.state = .errored(error.localizedDescription)
+        self.state = .error(error.localizedDescription)
       }
     }
   }
@@ -95,7 +95,7 @@ extension LoginViewModel {
 // MARK: LoginViewModel.State
 extension LoginViewModel {
   enum State {
-    case errored(String)
+    case error(String)
     case success
     case loading
   }

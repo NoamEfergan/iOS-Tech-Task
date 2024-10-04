@@ -84,7 +84,7 @@ extension IndividualAccountViewModel {
 
 // MARK: IndividualAccountViewModel.State
 extension IndividualAccountViewModel {
-  enum State {
+  enum State: Equatable {
     case idle
     case loading
     case success(newAmount: String)
