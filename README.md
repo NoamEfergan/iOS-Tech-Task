@@ -1,70 +1,29 @@
+# Moneybox iOS Technical Challenge - Noam Efergan
 
-# Moneybox iOS Technical Challenge
+## Summary
 
-## The Brief
+I've taken the brief at "face value", and have created the dummy app as requested in the criteria. The app is built for iOS 15+, using 100% UIKit, and has all of the features requested.
 
-To create a 'light' version of the Moneybox app that will allow existing users to login and check their account balance, as well as viewing their Moneybox savings. 
-- To clone this repository into your private repository and implement the solution.
- 
-### The app should have
-- A login screen to allow existing users to sign in
-- A screen to show the accounts the user holds, e.g. ISA, GIA
-- A screen to show some details of the account, including a simple button to add money to its moneybox.
-- The button will add a fixed amount of £10. It should use the `POST /oneoffpayments` endpoint provided, and the account's Moneybox amount would be updated.
+### Notable Points
 
-A prototype wireframe of all 3 screens is provided as a guideline. You are free to provide additional information if you wish.
-![](wireframe.png)
+- The app is built using the MVVM design pattern, with a Coordinator pattern for navigation.
+- Every screen has a ViewModel, and every ViewModel has a unit test.
+- In addition, every screen has a snapshot test, for each state that it might be in.
+- There's a jazzy little Lottie animation, because ✨why not?✨
 
-### What we are looking for
- - **Showcase what you can do. It can be a refined UI, or enhanced UX, or use of specific design patterns in the code, or anything that can make the project stand out.**
- - Demonstration of coding style, conventions and patterns.
- - A tidy code organisation.
- - Use of autolayout and UIKit.
- - Implementation of unit tests.
- - Any accessibility feature would be a bonus.
- - The application must run on iOS 15 or later.
- - Any 3rd party library should be integrated using Swift Package Manager.
+### Tooling
 
-### API Usage
-The Networking methods and Models for requests and responses are ready-made in the Networking module of the project.
+- The first thing i've done, is add SwiftFormat to the project. i find that tooling like this helps to keep the codebase clean and consistent.
+- I've also added a GitHub to run SwiftFormat on every push to `master`, to ensure that the codebase stays clean. In a real project, this would run on every PR.
+- I've added a GitHub action to run the unit tests on every push to `master`, to ensure that the codebase stays stable. In a real project, this would run on every PR.
 
-#### Base URL & Test User
-The base URL for the moneybox sandbox environment is `https://api-test02.moneyboxapp.com/`. </br>
-You can log in using the following user:
+### What I would do next
 
-|  Username          | Password         |
-| ------------- | ------------- |
-| test+ios2@moneyboxapp.com  | P455word12  |
+- Offline mode! I would add a local database to store the user's data, so that they can still see their account balance when they're offline. a new fetch would overwrite this, but it would be a nice touch.
+- I would add a `UIRefreshControl` to the `AccountViewController`, so that the user can pull to refresh the data.
+- I think accessibility is really important, and I would like to add some more accessibility features to the app.
+- I would add some more animations to the app, to make it feel more alive.
 
-#### Authentication
-You should obtain a bearer token from the Login response, and attach it as an Authorization header for the endpoints. Helper methods in the API/Base folder should be used for that.
-(Note: The BearerToken has a sliding expiration of 5 mins).
+### Summary
 
-| Key  |  Value  |
-| ------------- | ------------- |
-| Authorization |  Bearer TsMWRkbrcu3NGrpf84gi2+pg0iOMVymyKklmkY0oI84= |
-
-#### API Call Hint
-
-```
-let dataProvider = DataProvider()
-dataProvider.login(request: request, completion: completion)
-```
-request: Initialize your request model </br>
-Completion: Handle your API success and failure cases
-
-## Unit Tests
-The MoneyBoxTests folder includes stubbed data to easily mock the responses needed for unit testing
-
-#### Usage Hint
-You can create a DataProviderMock class via inject DataProviderLogic protocol </br>
-You can mock response in Login.json file like this:
-```
-StubData.read(file: "Login", callback: completion)
-```
-
-### How to Submit your solution:
- - To share your Github repository with the user valerio-bettini.
- - (Optional) Provide a readme in markdown which outlines your solution.
-
-## Good luck!
+I've had a lot of fun building this app, and I hope you enjoy looking through the code. I'm looking forward to hearing your feedback, positive or negative. Thanks for the opportunity!
