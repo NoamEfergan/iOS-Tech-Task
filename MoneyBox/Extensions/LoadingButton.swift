@@ -25,15 +25,21 @@ class LoadingButton: UIButton {
 // MARK: - Public methods
 extension LoadingButton {
   func startLoading() {
-    isEnabled = false
-    titleLabel?.alpha = 0
-    activityIndicator.startAnimating()
+    DispatchQueue.main.async { [weak self] in
+      guard let self else { return }
+      isEnabled = false
+      titleLabel?.alpha = 0
+      activityIndicator.startAnimating()
+    }
   }
 
   func stopLoading() {
-    isEnabled = true
-    titleLabel?.alpha = 1
-    activityIndicator.stopAnimating()
+    DispatchQueue.main.async { [weak self] in
+      guard let self else { return }
+      isEnabled = true
+      titleLabel?.alpha = 1
+      activityIndicator.stopAnimating()
+    }
   }
 }
 

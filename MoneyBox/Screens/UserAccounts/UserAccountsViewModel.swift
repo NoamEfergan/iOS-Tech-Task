@@ -39,7 +39,6 @@ final class UserAccountsViewModel {
 
   func fetchProducts() {
     state = .loading
-    // TODO: Local storage of the old response, so we can fetch _that_ first.
     loadingTask?.cancel()
     loadingTask = Task {
       do {

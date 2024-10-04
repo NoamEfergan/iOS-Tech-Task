@@ -2,10 +2,14 @@ import UIKit
 
 // MARK: - IndividualAccountViewController
 final class IndividualAccountViewController: UIViewController {
+  // MARK: - Properties
+  private let viewModel: IndividualAccountViewModel
+  private let id: Int
+
   // MARK: - UIViews
   private let titleLabel: UILabel = {
     let label = UILabel()
-    label.font = .systemFont(ofSize: 32, weight: .black)
+    label.font = .systemFont(ofSize: Constants.titleFontSize, weight: .black)
     label.textColor = UIColor(resource: .accent)
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
@@ -19,14 +23,14 @@ final class IndividualAccountViewController: UIViewController {
 
   private let planValueLabel: UILabel = {
     let label = UILabel()
-    label.font = .systemFont(ofSize: 16, weight: .bold)
+    label.font = .systemFont(ofSize: Constants.valueFontSize, weight: .bold)
     return label
   }()
 
   private let planValueStackView: UIStackView = {
     let label = UILabel()
     label.text = "Plan value:"
-    label.font = .systemFont(ofSize: 16, weight: .regular)
+    label.font = .systemFont(ofSize: Constants.valueFontSize, weight: .regular)
     let stackView = UIStackView(arrangedSubviews: [label])
     stackView.axis = .horizontal
     stackView.alignment = .fill
@@ -37,14 +41,14 @@ final class IndividualAccountViewController: UIViewController {
 
   private let moneyBoxValueLabel: UILabel = {
     let label = UILabel()
-    label.font = .systemFont(ofSize: 16, weight: .bold)
+    label.font = .systemFont(ofSize: Constants.valueFontSize, weight: .bold)
     return label
   }()
 
   private let moneyBoxValueStackView: UIStackView = {
     let label = UILabel()
     label.text = "Moneybox:"
-    label.font = .systemFont(ofSize: 16, weight: .regular)
+    label.font = .systemFont(ofSize: Constants.valueFontSize, weight: .regular)
     let stackView = UIStackView(arrangedSubviews: [label])
     stackView.axis = .horizontal
     stackView.alignment = .fill
@@ -61,23 +65,26 @@ final class IndividualAccountViewController: UIViewController {
     return stackView
   }()
 
-  private let addButton: UIButton = {
-    let button = UIButton(type: .system)
+  private let addButton: LoadingButton = {
+    let button = LoadingButton()
     button.setTitle("Add £10", for: .normal)
-    button.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+    button.titleLabel?.font = .systemFont(ofSize: Constants.valueFontSize, weight: .semibold)
     button.backgroundColor = UIColor(resource: .accent)
     button.setTitleColor(.white, for: .normal)
-    button.layer.cornerRadius = 8
+    button.layer.cornerRadius = Constants.buttonCornerRadius
     button.translatesAutoresizingMaskIntoConstraints = false
     return button
   }()
 
   // MARK: - Initialisers
-  init(product: DisplayableProduct) {
+  init(product: DisplayableProduct, viewModel: IndividualAccountViewModel) {
+    self.viewModel = viewModel
+    id = product.id
     titleLabel.text = product.name
     planValueLabel.text = product.planValue
     moneyBoxValueLabel.text = product.moneyBoxValue
     super.init(nibName: nil, bundle: nil)
+    viewModel.delegate = self
   }
 
   required init?(coder _: NSCoder) {
@@ -140,12 +147,55 @@ private extension IndividualAccountViewController {
   }
 
   func setupAddButton() {
+    addButton.addTarget(self, action: #selector(onAddButtonTapped), for: .touchUpInside)
     view.addSubview(addButton)
     NSLayoutConstraint.activate([
       addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
       addButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-      addButton.widthAnchor.constraint(equalToConstant: 120),
-      addButton.heightAnchor.constraint(equalToConstant: 44)
+      addButton.widthAnchor.constraint(equalToConstant: Constants.buttonWidth),
+      addButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight)
     ])
+  }
+}
+
+// MARK: - Private methods
+private extension IndividualAccountViewController {
+  @objc
+  func onAddButtonTapped() {
+    viewModel.addMoney(id: id)
+  }
+}
+
+// MARK: IndividualAccountViewModelDelegate
+extension IndividualAccountViewController: IndividualAccountViewModelDelegate {
+  func onStateUpdate(state: IndividualAccountViewModel.State) {
+    switch state {
+    case .idle:
+      addButton.stopLoading()
+    case .loading:
+      addButton.startLoading()
+    case let .success(newAmount):
+      addButton.stopLoading()
+      DispatchQueue.main.async { [weak self] in
+        self?.moneyBoxValueLabel.text = newAmount
+      }
+    case let .failure(msg):
+      addButton.stopLoading()
+      let toastModel = ToastModel(style: .error, title: msg)
+      DispatchQueue.main.async { [weak self] in
+        self?.showToast(toastModel: toastModel)
+      }
+    }
+  }
+}
+
+// MARK: IndividualAccountViewController.Constants
+private extension IndividualAccountViewController {
+  enum Constants {
+    static let titleFontSize: CGFloat = 32
+    static let valueFontSize: CGFloat = 16
+    static let buttonCornerRadius: CGFloat = 8
+    static let buttonHeight: CGFloat = 44
+    static let buttonWidth: CGFloat = 120
   }
 }
