@@ -20,13 +20,13 @@ final class LoginViewModel {
   weak var sessionManager: SessionManager?
   weak var delegate: LoginViewModelDelegate?
   private var loadingTask: Task<Void, Never>?
-  private var state: State = .loading {
+  private var state: State = .idle {
     didSet { delegate?.onStateUpdate(state) }
   }
 
   // MARK: - Initialisers
 
-  init(networkingService: DataProviderLogic, state: State = .loading) {
+  init(networkingService: DataProviderLogic, state: State = .idle) {
     self.networkingService = networkingService
     self.state = state
   }
@@ -98,5 +98,6 @@ extension LoginViewModel {
     case error(String)
     case success
     case loading
+    case idle
   }
 }

@@ -47,6 +47,12 @@
 		24430A4B2CB0626300D92490 /* UserAccountsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24430A4A2CB0625C00D92490 /* UserAccountsViewModelTests.swift */; };
 		24430A4E2CB0629100D92490 /* MockDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24430A4D2CB0629100D92490 /* MockDataProvider.swift */; };
 		24430A502CB0687200D92490 /* LoginViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24430A4F2CB0687200D92490 /* LoginViewModelTests.swift */; };
+		24430A532CB06A0400D92490 /* LoginValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24430A522CB06A0400D92490 /* LoginValidatorTests.swift */; };
+		24430A592CB06B3900D92490 /* InlineSnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 24430A582CB06B3900D92490 /* InlineSnapshotTesting */; };
+		24430A5B2CB06B3900D92490 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 24430A5A2CB06B3900D92490 /* SnapshotTesting */; };
+		24430A5E2CB06B5500D92490 /* LoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24430A5D2CB06B4D00D92490 /* LoginViewControllerTests.swift */; };
+		24430A602CB06EC500D92490 /* UserAccountsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24430A5F2CB06EC500D92490 /* UserAccountsViewControllerTests.swift */; };
+		24430A622CB071D000D92490 /* IndividualAccountViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24430A612CB071CC00D92490 /* IndividualAccountViewControllerTests.swift */; };
 		24DB4B402CAE9BD600FA476E /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B3F2CAE9BD200FA476E /* KeychainManager.swift */; };
 		24DB4B412CAE9BD600FA476E /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B3F2CAE9BD200FA476E /* KeychainManager.swift */; };
 		24DB4B452CAE9DE300FA476E /* UserAccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB4B442CAE9DE300FA476E /* UserAccountsViewController.swift */; };
@@ -103,6 +109,10 @@
 		24430A4A2CB0625C00D92490 /* UserAccountsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountsViewModelTests.swift; sourceTree = "<group>"; };
 		24430A4D2CB0629100D92490 /* MockDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataProvider.swift; sourceTree = "<group>"; };
 		24430A4F2CB0687200D92490 /* LoginViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTests.swift; sourceTree = "<group>"; };
+		24430A522CB06A0400D92490 /* LoginValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginValidatorTests.swift; sourceTree = "<group>"; };
+		24430A5D2CB06B4D00D92490 /* LoginViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerTests.swift; sourceTree = "<group>"; };
+		24430A5F2CB06EC500D92490 /* UserAccountsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountsViewControllerTests.swift; sourceTree = "<group>"; };
+		24430A612CB071CC00D92490 /* IndividualAccountViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualAccountViewControllerTests.swift; sourceTree = "<group>"; };
 		24DB4B3F2CAE9BD200FA476E /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		24DB4B442CAE9DE300FA476E /* UserAccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountsViewController.swift; sourceTree = "<group>"; };
 		24DB4B4B2CAE9F4E00FA476E /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -139,6 +149,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24430A592CB06B3900D92490 /* InlineSnapshotTesting in Frameworks */,
+				24430A5B2CB06B3900D92490 /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +237,24 @@
 			path = Stubs;
 			sourceTree = "<group>";
 		};
+		24430A512CB069DA00D92490 /* Validators */ = {
+			isa = PBXGroup;
+			children = (
+				24430A522CB06A0400D92490 /* LoginValidatorTests.swift */,
+			);
+			path = Validators;
+			sourceTree = "<group>";
+		};
+		24430A5C2CB06B3F00D92490 /* SnapshotTests */ = {
+			isa = PBXGroup;
+			children = (
+				24430A612CB071CC00D92490 /* IndividualAccountViewControllerTests.swift */,
+				24430A5D2CB06B4D00D92490 /* LoginViewControllerTests.swift */,
+				24430A5F2CB06EC500D92490 /* UserAccountsViewControllerTests.swift */,
+			);
+			path = SnapshotTests;
+			sourceTree = "<group>";
+		};
 		24DB4B422CAE9DBD00FA476E /* Screens */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,6 +332,8 @@
 		B2CA46E12793508A0041B3A5 /* MoneyBoxTests */ = {
 			isa = PBXGroup;
 			children = (
+				24430A5C2CB06B3F00D92490 /* SnapshotTests */,
+				24430A512CB069DA00D92490 /* Validators */,
 				24430A492CB0624E00D92490 /* ViewModels */,
 				24430A4C2CB0628B00D92490 /* Stubs */,
 				B2CA47682794D6AC0041B3A5 /* ResponseJsons */,
@@ -400,6 +432,7 @@
 			packageReferences = (
 				24DB4B8D2CAED19C00FA476E /* XCLocalSwiftPackageReference "Networking" */,
 				24430A322CAFFD0600D92490 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				24430A572CB06B3900D92490 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			productRefGroup = B2CA46C9279350880041B3A5 /* Products */;
 			projectDirPath = "";
@@ -475,12 +508,14 @@
 			files = (
 				24430A402CB0609B00D92490 /* MainCoordinator.swift in Sources */,
 				24430A452CB060C400D92490 /* ToastStyle.swift in Sources */,
+				24430A602CB06EC500D92490 /* UserAccountsViewControllerTests.swift in Sources */,
 				24430A412CB060A100D92490 /* ShimmeringLabel.swift in Sources */,
 				2416E7772CAE976C003BF114 /* LoginValidator.swift in Sources */,
 				242E9BEE2CAFEA520078A4E1 /* IndividualAccountViewController.swift in Sources */,
 				24DB4B452CAE9DE300FA476E /* UserAccountsViewController.swift in Sources */,
 				24430A472CB0613800D92490 /* UIViewController+ShowToast.swift in Sources */,
 				2416E7762CAE975E003BF114 /* LoginViewModel.swift in Sources */,
+				24430A532CB06A0400D92490 /* LoginValidatorTests.swift in Sources */,
 				24430A422CB060AA00D92490 /* Coordinator.swift in Sources */,
 				24430A382CB000AF00D92490 /* IndividualAccountViewModelTests.swift in Sources */,
 				24430A432CB060B400D92490 /* LoginViewController.swift in Sources */,
@@ -490,6 +525,8 @@
 				24DB4B892CAECD7C00FA476E /* UserDefaultsManager.swift in Sources */,
 				24430A4B2CB0626300D92490 /* UserAccountsViewModelTests.swift in Sources */,
 				24430A482CB0613F00D92490 /* ToastView.swift in Sources */,
+				24430A5E2CB06B5500D92490 /* LoginViewControllerTests.swift in Sources */,
+				24430A622CB071D000D92490 /* IndividualAccountViewControllerTests.swift in Sources */,
 				242E9BF32CAFF46E0078A4E1 /* IndividualAccountViewModel.swift in Sources */,
 				B2CA47672794D69A0041B3A5 /* StubData.swift in Sources */,
 				24430A3D2CB0608500D92490 /* Padding.swift in Sources */,
@@ -786,6 +823,14 @@
 				minimumVersion = 4.5.0;
 			};
 		};
+		24430A572CB06B3900D92490 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.17.5;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -793,6 +838,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 24430A322CAFFD0600D92490 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
+		};
+		24430A582CB06B3900D92490 /* InlineSnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24430A572CB06B3900D92490 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = InlineSnapshotTesting;
+		};
+		24430A5A2CB06B3900D92490 /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24430A572CB06B3900D92490 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
 		};
 		24DB4B8E2CAED19C00FA476E /* Networking */ = {
 			isa = XCSwiftPackageProductDependency;

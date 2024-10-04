@@ -138,16 +138,30 @@ private extension LoginViewController {
 
   func handleErrorState(_ error: String) {
     let model = ToastModel(style: .error, title: error)
-    passwordTextField.isEnabled = true
-    emailTextField.isEnabled = true
-    loginButton.stopLoading()
-    showToast(toastModel: model)
+    DispatchQueue.main.async { [weak self] in
+      guard let self else { return }
+      passwordTextField.isEnabled = true
+      emailTextField.isEnabled = true
+      loginButton.stopLoading()
+      showToast(toastModel: model)
+    }
   }
 
   func handleLoadingState() {
     passwordTextField.isEnabled = false
     emailTextField.isEnabled = false
     loginButton.startLoading()
+  }
+
+  func handleIdleState() {
+    DispatchQueue.main.async { [weak self] in
+      guard let self else { return }
+      passwordTextField.isEnabled = true
+      emailTextField.isEnabled = true
+      passwordTextField.text = nil
+      emailTextField.text = nil
+      loginButton.stopLoading()
+    }
   }
 
   func handleSuccessState() {
@@ -173,6 +187,8 @@ extension LoginViewController: LoginViewModelDelegate {
       handleSuccessState()
     case .loading:
       handleLoadingState()
+    case .idle:
+      handleIdleState()
     }
   }
 }

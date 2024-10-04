@@ -11,6 +11,11 @@ import XCTest
 
 // MARK: - LoginViewModelTests
 class LoginViewModelTests: XCTestCase {
+  override class func tearDown() {
+    KeychainManager.clearCredentialsFromKeychain()
+    UserDefaultsManager.deleteName()
+  }
+
   func test_successfulLogin() {
     let expectation = expectation(description: "Should update state")
 
