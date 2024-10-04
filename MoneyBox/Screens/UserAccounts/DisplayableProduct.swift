@@ -11,5 +11,5 @@ struct DisplayableProduct {
   let name: String
   let planValue: String
   let moneyBoxValue: String
-  let id: String
+  let id: Int
 }

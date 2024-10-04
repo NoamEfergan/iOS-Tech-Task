@@ -13,9 +13,39 @@ final class ProductCardCell: UICollectionViewCell {
 
   // MARK: - UIViews
   private let containerView = UIView()
+
+  private let nameStack: UIStackView = {
+    let stack = UIStackView()
+    stack.axis = .vertical
+    stack.spacing = Padding.extraSmall
+    stack.translatesAutoresizingMaskIntoConstraints = false
+    return stack
+  }()
+
   private let nameLabel = UILabel()
+  private let nameTitleLabel = UILabel()
+
+  private let planStack: UIStackView = {
+    let stack = UIStackView()
+    stack.axis = .horizontal
+    stack.spacing = Padding.extraSmall
+    stack.translatesAutoresizingMaskIntoConstraints = false
+    return stack
+  }()
+
   private let planValueLabel = UILabel()
+  private let planValueTitleLabel = UILabel()
+
+  private let moneyBoxStack: UIStackView = {
+    let stack = UIStackView()
+    stack.axis = .horizontal
+    stack.spacing = Padding.extraSmall
+    stack.translatesAutoresizingMaskIntoConstraints = false
+    return stack
+  }()
+
   private let moneyBoxValueLabel = UILabel()
+  private let moneyBoxValueTitleLabel = UILabel()
 
   // MARK: - Initialisers
   override init(frame: CGRect) {
@@ -32,14 +62,14 @@ final class ProductCardCell: UICollectionViewCell {
 private extension ProductCardCell {
   func setupUI() {
     setupContainerView()
-    setupNameLabel()
-    setupPlanValueLabel()
-    setupMoneyBoxValueLabel()
+    setupNameStack()
+    setupPlanValueStack()
+    setupMoneyBoxValueStack()
     setupConstraints()
   }
 
   func setupContainerView() {
-    containerView.backgroundColor = .systemBackground
+    containerView.backgroundColor = .white
     containerView.layer.cornerRadius = Constants.containerCornerRadius
     containerView.layer.shadowColor = UIColor.black.cgColor
     containerView.layer.shadowOpacity = Constants.shadowOpacity
@@ -49,32 +79,41 @@ private extension ProductCardCell {
     contentView.addSubview(containerView)
   }
 
-  func setupNameLabel() {
+  func setupNameStack() {
     nameLabel.font = .systemFont(ofSize: Constants.nameFontSize, weight: .medium)
     nameLabel.textColor = .secondaryLabel
-    nameLabel.translatesAutoresizingMaskIntoConstraints = false
-    containerView.addSubview(nameLabel)
+    nameTitleLabel.font = .systemFont(ofSize: Constants.nameFontSize - 2, weight: .light)
+    nameTitleLabel.text = "Product name:"
+    nameStack.addArrangedSubview(nameTitleLabel)
+    nameStack.addArrangedSubview(nameLabel)
+    containerView.addSubview(nameStack)
   }
 
-  func setupPlanValueLabel() {
+  func setupPlanValueStack() {
     planValueLabel.font = .systemFont(ofSize: Constants.valueFontSize, weight: .bold)
     planValueLabel.textColor = .label
-    planValueLabel.translatesAutoresizingMaskIntoConstraints = false
-    containerView.addSubview(planValueLabel)
+    planValueTitleLabel.font = .systemFont(ofSize: Constants.valueFontSize - 4, weight: .light)
+    planValueTitleLabel.text = "Plan value:"
+    planStack.addArrangedSubview(planValueTitleLabel)
+    planStack.addArrangedSubview(planValueLabel)
+    containerView.addSubview(planStack)
   }
 
-  func setupMoneyBoxValueLabel() {
+  func setupMoneyBoxValueStack() {
     moneyBoxValueLabel.font = .systemFont(ofSize: Constants.moneyBoxFontSize, weight: .regular)
     moneyBoxValueLabel.textColor = .secondaryLabel
-    moneyBoxValueLabel.translatesAutoresizingMaskIntoConstraints = false
-    containerView.addSubview(moneyBoxValueLabel)
+    moneyBoxValueTitleLabel.font = .systemFont(ofSize: Constants.moneyBoxFontSize - 2, weight: .light)
+    moneyBoxValueTitleLabel.text = "Money box:"
+    moneyBoxStack.addArrangedSubview(moneyBoxValueTitleLabel)
+    moneyBoxStack.addArrangedSubview(moneyBoxValueLabel)
+    containerView.addSubview(moneyBoxStack)
   }
 
   func setupConstraints() {
     setupContainerViewConstraints()
-    setupNameLabelConstraints()
-    setupPlanValueLabelConstraints()
-    setupMoneyBoxValueLabelConstraints()
+    setupNameStackConstraints()
+    setupPlanValueStackConstraints()
+    setupMoneyBoxValueStackConstraints()
   }
 
   func setupContainerViewConstraints() {
@@ -86,29 +125,29 @@ private extension ProductCardCell {
     ])
   }
 
-  func setupNameLabelConstraints() {
+  func setupNameStackConstraints() {
     NSLayoutConstraint.activate([
-      nameLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: Padding.regular),
-      nameLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: Padding.regular),
-      nameLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -Padding.regular)
+      nameStack.topAnchor.constraint(equalTo: containerView.topAnchor, constant: Padding.regular),
+      nameStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: Padding.regular),
+      nameStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -Padding.regular)
     ])
   }
 
-  func setupPlanValueLabelConstraints() {
+  func setupPlanValueStackConstraints() {
     NSLayoutConstraint.activate([
-      planValueLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: Padding.small),
-      planValueLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: Padding.regular),
-      planValueLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -Padding.regular)
+      planStack.topAnchor.constraint(equalTo: nameStack.bottomAnchor, constant: Padding.small),
+      planStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: Padding.regular),
+      planStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -Padding.regular)
     ])
   }
 
-  func setupMoneyBoxValueLabelConstraints() {
+  func setupMoneyBoxValueStackConstraints() {
     NSLayoutConstraint.activate([
-      moneyBoxValueLabel.topAnchor.constraint(equalTo: planValueLabel.bottomAnchor, constant: Padding.extraSmall),
-      moneyBoxValueLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: Padding.regular),
-      moneyBoxValueLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -Padding.regular),
-      moneyBoxValueLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor,
-                                                 constant: -Padding.regular)
+      moneyBoxStack.topAnchor.constraint(equalTo: planStack.bottomAnchor, constant: Padding.extraSmall),
+      moneyBoxStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: Padding.regular),
+      moneyBoxStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -Padding.regular),
+      moneyBoxStack.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor,
+                                            constant: -Padding.regular)
     ])
   }
 }
