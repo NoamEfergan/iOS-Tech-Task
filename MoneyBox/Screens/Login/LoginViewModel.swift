@@ -8,16 +8,63 @@
 import Foundation
 import Networking
 
+// MARK: - LoginViewModelDelegate
+protocol LoginViewModelDelegate: NSObject {
+  func onStateUpdate(_ state: LoginViewModel.State)
+}
+
 // MARK: - LoginViewModel
 final class LoginViewModel {
   // MARK: - Properties
   private let networkingService: DataProviderLogic
   weak var sessionManager: SessionManager?
-
-  init(networkingService: DataProviderLogic) {
-    self.networkingService = networkingService
+  weak var delegate: LoginViewModelDelegate?
+  private var loadingTask: Task<Void, Never>?
+  private var state: State = .loading {
+    didSet { delegate?.onStateUpdate(state) }
   }
 
+  // MARK: - Initialisers
+
+  init(networkingService: DataProviderLogic, state: State = .loading) {
+    self.networkingService = networkingService
+    self.state = state
+  }
+
+  deinit {
+    loadingTask = nil
+  }
+
+  // MARK: - Public methods
+  func login(with email: String?, and password: String?) {
+    state = .loading
+    guard let email, LoginValidator.validateEmail(email) else {
+      state = .errored("Invalid email")
+      return
+    }
+    guard let password, LoginValidator.validatePassword(password) else {
+      state = .errored("Invalid password")
+      return
+    }
+    login(email: email, password: password)
+  }
+}
+
+// MARK: - Private methods
+private extension LoginViewModel {
+  func login(email: String, password: String) {
+    loadingTask?.cancel()
+    loadingTask = Task {
+      do {
+        try await performLogin(with: email, and: password)
+        self.state = .success
+      } catch {
+        self.state = .errored(error.localizedDescription)
+      }
+    }
+  }
+
+  @MainActor
   func performLogin(with email: String, and password: String) async throws {
     let request = LoginRequest(email: email, password: password)
     return try await withCheckedThrowingContinuation { continuation in
@@ -42,5 +89,14 @@ final class LoginViewModel {
 extension LoginViewModel {
   enum LoginError: Error {
     case failure(msg: String)
+  }
+}
+
+// MARK: LoginViewModel.State
+extension LoginViewModel {
+  enum State {
+    case errored(String)
+    case success
+    case loading
   }
 }

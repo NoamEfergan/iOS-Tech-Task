@@ -61,19 +61,15 @@ class LoginViewController: UIViewController {
   }()
 
   // MARK: - Properties
-  private var state: State = .loading {
-    didSet { handleState(state) }
-  }
 
   private let viewModel: LoginViewModel
-  private var loadingTask: Task<Void, Never>?
   weak var coordinator: MainCoordinator?
 
   // MARK: - Initialisers
-  init(viewModel: LoginViewModel, state: State = .loading) {
+  init(viewModel: LoginViewModel) {
     self.viewModel = viewModel
-    self.state = state
     super.init(nibName: nil, bundle: nil)
+    viewModel.delegate = self
   }
 
   required init?(coder _: NSCoder) {
@@ -88,10 +84,6 @@ class LoginViewController: UIViewController {
 
   override func viewDidDisappear(_: Bool) {
     removeKeyboardObservers()
-  }
-
-  deinit {
-    loadingTask = nil
   }
 }
 
@@ -139,42 +131,9 @@ private extension LoginViewController {
 
 // MARK: - Private methods
 private extension LoginViewController {
-  func handleState(_ state: State) {
-    switch state {
-    case let .errored(error):
-      handleErrorState(error)
-    case .success:
-      handleSuccessState()
-    case .loading:
-      handleLoadingState()
-    }
-  }
-
   @objc
   func onTapLoginButton() {
-    state = .loading
-    guard let email = emailTextField.text, LoginValidator.validateEmail(email) else {
-      state = .errored("Invalid email")
-      return
-    }
-    guard let password = passwordTextField.text, LoginValidator.validatePassword(password) else {
-      state = .errored("Invalid password")
-      return
-    }
-    login(email: email, password: password)
-  }
-
-  @MainActor
-  func login(email: String, password: String) {
-    loadingTask?.cancel()
-    loadingTask = Task {
-      do {
-        try await viewModel.performLogin(with: email, and: password)
-        self.coordinator?.navigateToUserAccounts()
-      } catch {
-        self.state = .errored(error.localizedDescription)
-      }
-    }
+    viewModel.login(with: emailTextField.text, and: passwordTextField.text)
   }
 
   func handleErrorState(_ error: String) {
@@ -193,6 +152,21 @@ private extension LoginViewController {
 
   func handleSuccessState() {
     loginButton.stopLoading()
+    coordinator?.navigateToUserAccounts()
+  }
+}
+
+// MARK: LoginViewModelDelegate
+extension LoginViewController: LoginViewModelDelegate {
+  func onStateUpdate(_ state: LoginViewModel.State) {
+    switch state {
+    case let .errored(error):
+      handleErrorState(error)
+    case .success:
+      handleSuccessState()
+    case .loading:
+      handleLoadingState()
+    }
   }
 }
 
@@ -225,14 +199,5 @@ private extension LoginViewController {
     if view.frame.origin.y != 0 {
       view.frame.origin.y = 0
     }
-  }
-}
-
-// MARK: LoginViewController.State
-extension LoginViewController {
-  enum State {
-    case errored(String)
-    case success
-    case loading
   }
 }
