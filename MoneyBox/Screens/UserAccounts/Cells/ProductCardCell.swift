@@ -12,7 +12,11 @@ final class ProductCardCell: UICollectionViewCell {
   static let identifier: String = "ProductCardCell"
 
   // MARK: - UIViews
-  private let containerView = UIView()
+  private let containerView: CardView = {
+    let cardView = CardView()
+    cardView.translatesAutoresizingMaskIntoConstraints = false
+    return cardView
+  }()
 
   private let nameStack: UIStackView = {
     let stack = UIStackView()
@@ -73,13 +77,6 @@ private extension ProductCardCell {
   }
 
   func setupContainerView() {
-    containerView.backgroundColor = .white
-    containerView.layer.cornerRadius = Constants.containerCornerRadius
-    containerView.layer.shadowColor = UIColor.black.cgColor
-    containerView.layer.shadowOpacity = Constants.shadowOpacity
-    containerView.layer.shadowOffset = Constants.shadowOffset
-    containerView.layer.shadowRadius = Constants.shadowRadius
-    containerView.translatesAutoresizingMaskIntoConstraints = false
     contentView.addSubview(containerView)
   }
 

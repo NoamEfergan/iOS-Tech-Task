@@ -83,8 +83,8 @@ extension ProductResponse {
     guard let id,
           let name = product?.friendlyName else { return nil }
     return .init(name: name,
-                 planValue: planValue?.formatted() ?? "--",
-                 moneyBoxValue: moneybox?.formatted() ?? "--",
+                 planValue: planValue?.formatted(.currency(code: "GBP")) ?? "--",
+                 moneyBoxValue: moneybox?.formatted(.currency(code: "GBP")) ?? "--",
                  id: id)
   }
 }

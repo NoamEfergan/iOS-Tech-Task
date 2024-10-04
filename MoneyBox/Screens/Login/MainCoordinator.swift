@@ -33,6 +33,14 @@ class MainCoordinator: Coordinator {
   func navigateToUserAccounts() {
     let viewModel = UserAccountsViewModel(networkingService: networkService)
     let viewController = UserAccountsViewController(viewModel: viewModel)
+    viewController.coordinator = self
+    DispatchQueue.main.async { [navigationController] in
+      navigationController.pushViewController(viewController, animated: true)
+    }
+  }
+
+  func navigateToIndividualAccounts(product: DisplayableProduct) {
+    let viewController = IndividualAccountViewController(product: product)
     DispatchQueue.main.async { [navigationController] in
       navigationController.pushViewController(viewController, animated: true)
     }

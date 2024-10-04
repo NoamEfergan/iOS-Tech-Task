@@ -56,6 +56,7 @@ final class UserAccountsViewController: UIViewController {
     listConfiguration.showsSeparators = false
     let layout = UICollectionViewCompositionalLayout.list(using: listConfiguration)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    collectionView.delegate = self
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     return collectionView
   }()
@@ -185,13 +186,28 @@ private extension UserAccountsViewController {
     case let .error(errorMessage):
       snapshot.appendItems([.error(errorMessage)])
     case let .loaded(response):
-      updateTotalPlanValue(value: response.totalPlanValue?.formatted())
+      updateTotalPlanValue(value: response.totalPlanValue?.formatted(.currency(code: "GBP")))
       if let products = response.productResponses?.compactMap({ $0.mapToDisplayable() }) {
         snapshot.appendItems(products.map { Item.product($0) })
       }
     }
 
     dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+  }
+}
+
+// MARK: UICollectionViewDelegate
+extension UserAccountsViewController: UICollectionViewDelegate {
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    switch viewModel.state {
+    case .loading, .error:
+      collectionView.deselectItem(at: indexPath, animated: false)
+    case let .loaded(response):
+      collectionView.deselectItem(at: indexPath, animated: true)
+      guard let products = response.productResponses?.compactMap({ $0.mapToDisplayable() }),
+            let product = products[safe: indexPath.row] else { return }
+      coordinator?.navigateToIndividualAccounts(product: product)
+    }
   }
 }
 

@@ -17,7 +17,12 @@ final class ProductCardErrorCell: UICollectionViewCell {
   static let identifier: String = "ProductCardErrorCell"
 
   // MARK: - UIViews
-  private let containerView = UIView()
+  private let containerView: CardView = {
+    let cardView = CardView()
+    cardView.translatesAutoresizingMaskIntoConstraints = false
+    return cardView
+  }()
+
   private let errorLabel: UILabel = {
     let label = UILabel()
     label.font = .systemFont(ofSize: Constants.fontSize, weight: .medium)
@@ -78,12 +83,6 @@ private extension ProductCardErrorCell {
   }
 
   func setupContainerView() {
-    containerView.backgroundColor = .white
-    containerView.layer.cornerRadius = Constants.containerCornerRadius
-    containerView.layer.shadowColor = UIColor.black.cgColor
-    containerView.layer.shadowOpacity = Constants.shadowOpacity
-    containerView.layer.shadowOffset = Constants.shadowOffset
-    containerView.layer.shadowRadius = Constants.shadowRadius
     containerView.translatesAutoresizingMaskIntoConstraints = false
     contentView.addSubview(containerView)
 
@@ -120,9 +119,6 @@ private extension ProductCardErrorCell {
 private extension ProductCardErrorCell {
   enum Constants {
     static let fontSize: CGFloat = 14
-    static let shadowOffset = CGSize(width: 0, height: 2)
-    static let shadowRadius: CGFloat = 4
-    static let shadowOpacity: Float = 0.1
     static let containerCornerRadius: CGFloat = 12
     static let buttonCornerRadius: CGFloat = 12
     static let buttonHeight: CGFloat = 44
