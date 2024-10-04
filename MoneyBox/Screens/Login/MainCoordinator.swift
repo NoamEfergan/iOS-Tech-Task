@@ -46,4 +46,11 @@ class MainCoordinator: Coordinator {
       navigationController.pushViewController(viewController, animated: true)
     }
   }
+
+  func logout() {
+    sessionManager.removeUserToken()
+    KeychainManager.clearCredentialsFromKeychain()
+    UserDefaultsManager.deleteName()
+    navigationController.popToRootViewController(animated: true)
+  }
 }

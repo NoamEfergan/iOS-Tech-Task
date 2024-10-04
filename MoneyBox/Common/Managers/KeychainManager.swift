@@ -1,10 +1,3 @@
-//
-//  KeychainManager.swift
-//  MoneyBox
-//
-//  Created by Noam Efergan on 03/10/2024.
-//
-
 import Foundation
 import Security
 
@@ -50,5 +43,22 @@ enum KeychainManager {
     }
 
     return (email: account, password: password)
+  }
+
+  static func clearCredentialsFromKeychain() {
+    let query = [
+      kSecClass as String: kSecClassInternetPassword,
+      kSecAttrServer as String: service
+    ] as [String: Any]
+
+    let status = SecItemDelete(query as CFDictionary)
+
+    if status == errSecSuccess {
+      print("Credentials successfully cleared from Keychain")
+    } else if status == errSecItemNotFound {
+      print("No credentials found in Keychain to clear")
+    } else {
+      print("Error clearing credentials from Keychain: \(status)")
+    }
   }
 }

@@ -51,6 +51,15 @@ final class UserAccountsViewController: UIViewController {
     return stackView
   }()
 
+  private lazy var logoutButton: UIButton = {
+    let button = UIButton(type: .system)
+    button.setImage(UIImage(systemName: "rectangle.portrait.and.arrow.right"), for: .normal)
+    button.tintColor = UIColor(resource: .accent)
+    button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+    button.translatesAutoresizingMaskIntoConstraints = false
+    return button
+  }()
+
   private lazy var collectionView: UICollectionView = {
     var listConfiguration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
     listConfiguration.showsSeparators = false
@@ -106,14 +115,21 @@ private extension UserAccountsViewController {
   }
 
   func setupTitleStack() {
-    titleStackView.addArrangedSubview(titleLabel)
+    let titleAndLogoutStack = UIStackView(arrangedSubviews: [titleLabel, logoutButton])
+    titleAndLogoutStack.axis = .horizontal
+    titleAndLogoutStack.alignment = .center
+
+    titleStackView.addArrangedSubview(titleAndLogoutStack)
     titleStackView.addArrangedSubview(totalPlanValueStackView)
     titleLabel.text = "Hello \(UserDefaultsManager.fetchName() ?? "")!"
     view.addSubview(titleStackView)
     NSLayoutConstraint.activate([
       titleStackView.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 4),
       titleStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Padding.regular),
-      titleStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Padding.regular)
+      titleStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Padding.regular),
+
+      logoutButton.widthAnchor.constraint(equalToConstant: 44),
+      logoutButton.heightAnchor.constraint(equalToConstant: 44)
     ])
   }
 
@@ -127,10 +143,18 @@ private extension UserAccountsViewController {
     ])
     collectionView.backgroundColor = .clear
   }
+}
 
+// MARK: - Private methods
+private extension UserAccountsViewController {
   func updateTotalPlanValue(value: String?) {
     totalPlanValueLabel.text = value
     totalPlanValueLabel.stopShimmering()
+  }
+
+  @objc
+  func logoutButtonTapped() {
+    coordinator?.logout()
   }
 }
 

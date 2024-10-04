@@ -151,8 +151,15 @@ private extension LoginViewController {
   }
 
   func handleSuccessState() {
-    loginButton.stopLoading()
-    coordinator?.navigateToUserAccounts()
+    DispatchQueue.main.async { [weak self] in
+      guard let self else { return }
+      passwordTextField.isEnabled = true
+      emailTextField.isEnabled = true
+      passwordTextField.text = nil
+      emailTextField.text = nil
+      loginButton.stopLoading()
+      coordinator?.navigateToUserAccounts()
+    }
   }
 }
 
