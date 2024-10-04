@@ -38,6 +38,7 @@ final class UserAccountsViewModel {
   // MARK: - Public methods
 
   func fetchProducts() {
+    state = .loading
     // TODO: Local storage of the old response, so we can fetch _that_ first.
     loadingTask?.cancel()
     loadingTask = Task {
@@ -46,7 +47,7 @@ final class UserAccountsViewModel {
         self.state = .loaded(response: response)
       } catch {
         print("Noam: \(error.localizedDescription)")
-        self.state = .error
+        self.state = .error(errorMessage: error.localizedDescription)
       }
     }
   }
@@ -72,7 +73,7 @@ private extension UserAccountsViewModel {
 extension UserAccountsViewModel {
   enum State {
     case loading
-    case error
+    case error(errorMessage: String)
     case loaded(response: AccountResponse)
   }
 }

@@ -1,10 +1,3 @@
-//
-//  UserAccountsViewController.swift
-//  MoneyBox
-//
-//  Created by Noam Efergan on 03/10/2024.
-//
-
 import Networking
 import UIKit
 
@@ -17,6 +10,7 @@ final class UserAccountsViewController: UIViewController {
   // MARK: - Properties
   weak var coordinator: MainCoordinator?
   private let viewModel: UserAccountsViewModel
+  private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
 
   // MARK: - UIViews
   private let titleView: UILabel = {
@@ -27,7 +21,7 @@ final class UserAccountsViewController: UIViewController {
     return label
   }()
 
-  private let collectionView: UICollectionView = {
+  private lazy var collectionView: UICollectionView = {
     var listConfiguration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
     listConfiguration.showsSeparators = false
     let layout = UICollectionViewCompositionalLayout.list(using: listConfiguration)
@@ -51,11 +45,14 @@ final class UserAccountsViewController: UIViewController {
   // MARK: - Lifecycle methods
 
   override func viewDidLoad() {
-    viewModel.fetchProducts()
+    super.viewDidLoad()
     setupUI()
+    configureDataSource()
+    viewModel.fetchProducts()
   }
 
   override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
     navigationController?.setNavigationBarHidden(true, animated: animated)
   }
 }
@@ -79,9 +76,6 @@ private extension UserAccountsViewController {
   }
 
   func setupCollectionView() {
-    collectionView.dataSource = self
-    collectionView.register(ProductCardCell.self, forCellWithReuseIdentifier: ProductCardCell.identifier)
-    collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: .cellReusableID)
     view.addSubview(collectionView)
     NSLayoutConstraint.activate([
       collectionView.topAnchor.constraint(equalTo: titleView.bottomAnchor),
@@ -91,56 +85,87 @@ private extension UserAccountsViewController {
     ])
     collectionView.backgroundColor = .clear
   }
-}
 
-// MARK: UICollectionViewDataSource
-extension UserAccountsViewController: UICollectionViewDataSource {
-  func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-    switch viewModel.state {
-    case .loading:
-      return 4
-    case .error:
-      return 1
-    case let .loaded(response):
-      return response.productResponses?.count ?? 0
+  func configureDataSource() {
+    let productCellRegistration = UICollectionView
+      .CellRegistration<ProductCardCell, DisplayableProduct> { cell, _, product in
+        cell.configure(product: product)
+        cell.backgroundColor = UIColor(resource: .grey)
+      }
+
+    let errorCellRegistration = UICollectionView
+      .CellRegistration<ProductCardErrorCell, String> { cell, _, errorMessage in
+        cell.configure(error: errorMessage)
+        cell.delegate = self
+      }
+
+    let placeholderCellRegistration = UICollectionView.CellRegistration<ProductCardCell, Void> { cell, _, _ in
+      cell.placeHolder()
     }
+
+    dataSource = UICollectionViewDiffableDataSource<Section,
+      Item>(collectionView: collectionView) { collectionView, indexPath, item in
+        switch item {
+        case let .product(product):
+          return collectionView.dequeueConfiguredReusableCell(using: productCellRegistration,
+                                                              for: indexPath,
+                                                              item: product)
+        case let .error(errorMessage):
+          return collectionView.dequeueConfiguredReusableCell(using: errorCellRegistration,
+                                                              for: indexPath,
+                                                              item: errorMessage)
+        case .placeholder:
+          return collectionView.dequeueConfiguredReusableCell(using: placeholderCellRegistration,
+                                                              for: indexPath,
+                                                              item: ())
+        }
+      }
   }
 
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  func applySnapshot(animatingDifferences: Bool = true) {
+    var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+    snapshot.appendSections([.main])
+
     switch viewModel.state {
     case .loading:
-      guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCardCell.identifier,
-                                                          for: indexPath) as? ProductCardCell else {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: .cellReusableID, for: indexPath)
-        cell.backgroundColor = .lightGray
-        return cell
-      }
-      cell.placeHolder()
-      return cell
-    case .error:
-      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: .cellReusableID, for: indexPath)
-      cell.backgroundColor = .red
-      return cell
+      snapshot.appendItems([Item.placeholder])
+    case let .error(errorMessage):
+      snapshot.appendItems([.error(errorMessage)])
     case let .loaded(response):
-      guard let product = response.productResponses?[safe: indexPath.row],
-            let displayable = product.mapToDisplayable(),
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCardCell.identifier,
-                                                          for: indexPath) as? ProductCardCell
-      else {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: .cellReusableID, for: indexPath)
+      if let products = response.productResponses?.compactMap({ $0.mapToDisplayable() }) {
+        snapshot.appendItems(products.map { Item.product($0) })
       }
-      cell.configure(product: displayable)
-      cell.backgroundColor = UIColor(resource: .grey)
-      return cell
     }
+
+    dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
   }
 }
 
 // MARK: UserAccountsViewModelDelegate
 extension UserAccountsViewController: UserAccountsViewModelDelegate {
   func onStateUpdate() {
-    DispatchQueue.main.async { [collectionView] in
-      collectionView.reloadData()
+    DispatchQueue.main.async { [weak self] in
+      self?.applySnapshot()
     }
+  }
+}
+
+// MARK: ProductCardErrorCellDelegate
+extension UserAccountsViewController: ProductCardErrorCellDelegate {
+  func retryButtonTapped() {
+    viewModel.fetchProducts()
+  }
+}
+
+// MARK: - Helper types
+extension UserAccountsViewController {
+  enum Section {
+    case main
+  }
+
+  enum Item: Hashable {
+    case product(DisplayableProduct)
+    case error(String)
+    case placeholder
   }
 }
