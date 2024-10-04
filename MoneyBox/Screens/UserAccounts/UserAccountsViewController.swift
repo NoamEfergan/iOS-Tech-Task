@@ -13,12 +13,42 @@ final class UserAccountsViewController: UIViewController {
   private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
 
   // MARK: - UIViews
-  private let titleView: UILabel = {
+  private let titleLabel: UILabel = {
     let label = UILabel()
     label.font = .systemFont(ofSize: 32, weight: .black)
     label.textColor = UIColor(resource: .accent)
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
+  }()
+
+  private let totalPlanValueTitle: UILabel = {
+    let label = UILabel()
+    label.font = .systemFont(ofSize: 16, weight: .black)
+    label.translatesAutoresizingMaskIntoConstraints = false
+    return label
+  }()
+
+  private let totalPlanValueLabel: ShimmeringLabel = {
+    let label = ShimmeringLabel()
+    label.font = .systemFont(ofSize: 16, weight: .black)
+    label.translatesAutoresizingMaskIntoConstraints = false
+    return label
+  }()
+
+  private let totalPlanValueStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.axis = .horizontal
+    stackView.spacing = Padding.regular
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    return stackView
+  }()
+
+  private let titleStackView: UIStackView = {
+    let stackView = UIStackView()
+    stackView.axis = .vertical
+    stackView.spacing = Padding.regular
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    return stackView
   }()
 
   private lazy var collectionView: UICollectionView = {
@@ -61,24 +91,35 @@ final class UserAccountsViewController: UIViewController {
 private extension UserAccountsViewController {
   func setupUI() {
     view.backgroundColor = UIColor(resource: .grey)
-    setupTitleView()
+    setupTitleStack()
+    setupPlanValueStack()
     setupCollectionView()
   }
 
-  func setupTitleView() {
-    view.addSubview(titleView)
-    titleView.text = "Hello \(UserDefaultsManager.fetchName() ?? "")!"
+  func setupPlanValueStack() {
+    totalPlanValueTitle.text = "Total Plan Value:"
+    totalPlanValueLabel.text = "Loading..." // Won't show due to shimmer
+    totalPlanValueLabel.shimmer()
+    totalPlanValueStackView.addArrangedSubview(totalPlanValueTitle)
+    totalPlanValueStackView.addArrangedSubview(totalPlanValueLabel)
+  }
+
+  func setupTitleStack() {
+    titleStackView.addArrangedSubview(titleLabel)
+    titleStackView.addArrangedSubview(totalPlanValueStackView)
+    titleLabel.text = "Hello \(UserDefaultsManager.fetchName() ?? "")!"
+    view.addSubview(titleStackView)
     NSLayoutConstraint.activate([
-      titleView.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 4),
-      titleView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Padding.regular),
-      titleView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Padding.regular)
+      titleStackView.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 4),
+      titleStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Padding.regular),
+      titleStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Padding.regular)
     ])
   }
 
   func setupCollectionView() {
     view.addSubview(collectionView)
     NSLayoutConstraint.activate([
-      collectionView.topAnchor.constraint(equalTo: titleView.bottomAnchor),
+      collectionView.topAnchor.constraint(equalTo: titleStackView.bottomAnchor),
       collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -86,6 +127,15 @@ private extension UserAccountsViewController {
     collectionView.backgroundColor = .clear
   }
 
+  func updateTotalPlanValue(value: String?) {
+    totalPlanValueLabel.text = value
+    totalPlanValueLabel.stopShimmering()
+  }
+}
+
+// MARK: - DataSource methods
+
+private extension UserAccountsViewController {
   func configureDataSource() {
     let productCellRegistration = UICollectionView
       .CellRegistration<ProductCardCell, DisplayableProduct> { cell, _, product in
@@ -107,17 +157,20 @@ private extension UserAccountsViewController {
       Item>(collectionView: collectionView) { collectionView, indexPath, item in
         switch item {
         case let .product(product):
-          return collectionView.dequeueConfiguredReusableCell(using: productCellRegistration,
-                                                              for: indexPath,
-                                                              item: product)
+          return collectionView
+            .dequeueConfiguredReusableCell(using: productCellRegistration,
+                                           for: indexPath,
+                                           item: product)
         case let .error(errorMessage):
-          return collectionView.dequeueConfiguredReusableCell(using: errorCellRegistration,
-                                                              for: indexPath,
-                                                              item: errorMessage)
+          return collectionView
+            .dequeueConfiguredReusableCell(using: errorCellRegistration,
+                                           for: indexPath,
+                                           item: errorMessage)
         case .placeholder:
-          return collectionView.dequeueConfiguredReusableCell(using: placeholderCellRegistration,
-                                                              for: indexPath,
-                                                              item: ())
+          return collectionView
+            .dequeueConfiguredReusableCell(using: placeholderCellRegistration,
+                                           for: indexPath,
+                                           item: ())
         }
       }
   }
@@ -132,6 +185,7 @@ private extension UserAccountsViewController {
     case let .error(errorMessage):
       snapshot.appendItems([.error(errorMessage)])
     case let .loaded(response):
+      updateTotalPlanValue(value: response.totalPlanValue?.formatted())
       if let products = response.productResponses?.compactMap({ $0.mapToDisplayable() }) {
         snapshot.appendItems(products.map { Item.product($0) })
       }
